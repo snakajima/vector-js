@@ -4,14 +4,17 @@
 //
 
 import React, { Component } from 'react';
+import Reducer from './Reducer';
 import createStore from './SimpleRedux';
+import UndoStack from './UndoStack';
 import './App.css';
 
-//window.store = createStore(Reducer.reducer);
+window.stack = new UndoStack();
+window.store = createStore(Reducer.reducer);
 
 class App extends Component {
   render() {
-      return <p>Hello World</p>
+      return <p>Hello World 2</p>
   }
 }
 
