@@ -16,7 +16,6 @@ function reducer(_state, action) {
   }
   */
 
-  console.log(_state, action);
   if (typeof _state === "undefined") {
     var initialState = {};
     window.stack.append(initialState);

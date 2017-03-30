@@ -4,3 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+.canvas {
+    background: #ffc;
+}
+
+.drawer {
+    background: #fcc;
+}
