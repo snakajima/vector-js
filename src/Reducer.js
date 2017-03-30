@@ -30,10 +30,10 @@ function reducer(_state, action) {
   var draw;
     
   switch(action.type) {
-    case 'DrawStart':
+    case 'drawStart':
       state.draw = {path: "M" + action.x + "," + action.y, points:[{x:action.x, y:action.y}]};
       break;
-   case 'DrawAppend':
+   case 'drawAppend':
       draw = Object.assign({}, state.draw);
       draw.points = draw.points.map((point) => point);
       draw.points.push({x:action.x, y:action.y});
@@ -49,7 +49,7 @@ function reducer(_state, action) {
       }
       state.draw = draw;
       break;
-    case 'DrawEnd':
+    case 'drawEnd':
       draw = Object.assign({}, state.draw);
       const path = draw.points.reduce((path, point, index) => {
         if (index === 0) {
@@ -77,7 +77,7 @@ function reducer(_state, action) {
       state.drawMode = false;
       undoable = true;
       break;
-    case 'AddElement':
+    case 'addElement':
       state.drawMode = true;
       break;
     case 'setState':

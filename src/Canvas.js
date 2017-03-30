@@ -17,9 +17,9 @@ class Canvas extends Component {
         return <div>
             <div className='canvas' style={style} />
         {
-            this.props.paths.map((path) => {
+            this.props.paths.map((path, index) => {
                            return <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                           style={style}>
+                                 style={style} key={index}>
                            <path d={path} />
                            </svg>
                            })

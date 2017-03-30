@@ -16,7 +16,7 @@ class MenuBar extends Component {
         onClick={ () => {window.stack.redo(window.store)} } />
         <input className="btn" type="image"
         src="./ic_color_plus.png"
-        onClick={ () => {window.store.dispatch({type:'AddElement'})} } />
+        onClick={ () => {window.store.dispatch({type:'addElement'})} } />
           </div>
     }
 }

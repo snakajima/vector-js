@@ -14,7 +14,6 @@ class Drawer extends Component {
         this.onDrag = this.onDrag.bind(this);
     }
     onDragStart(e) {
-        console.log('onDragStart');
         if (typeof e.dataTransfer.setDragImage === "function") {
             e.dataTransfer.setDragImage(e.target, -10000, -10000);
         } else {
@@ -31,7 +30,7 @@ class Drawer extends Component {
             x:x, y:y
         };
         DragContext.setContext(context);
-        window.store.dispatch({type:'DrawStart', x:x, y:y});
+        window.store.dispatch({type:'drawStart', x:x, y:y});
     }
     onDrag(e) {
         var context = DragContext.getContext();
@@ -45,12 +44,12 @@ class Drawer extends Component {
             context.x = x;
             context.y = y;
             DragContext.setContext(context);
-            window.store.dispatch({type:'DrawAppend', x:x, y:y})
+            window.store.dispatch({type:'drawAppend', x:x, y:y})
         }
     }
     onDragEnd(e) {
         DragContext.setContext({});
-        window.store.dispatch({type:'DrawEnd'})
+        window.store.dispatch({type:'drawEnd'})
     }
     
     render() {
