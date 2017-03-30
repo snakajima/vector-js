@@ -27,19 +27,22 @@ function reducer(_state, action) {
   // Do not modify the state object or its sub-objects (no side effect).
   var state = Object.assign({}, _state);
   var undoable = false;
+  var draw;
     
   switch(action.type) {
     case 'DrawStart':
       state.draw = {path: "M" + action.x + "," + action.y, points:[{x:action.x, y:action.y}]};
       break;
    case 'DrawAppend':
-      var draw = Object.assign({}, state.draw);
+      draw = Object.assign({}, state.draw);
       draw.points = draw.points.map((point) => point);
       draw.points.push({x:action.x, y:action.y});
       const count = draw.points.length;
-      const last = draw.points[count-1];
+      const last = draw.points[count-2];
       const mid = { x:(action.x + last.x)/2, y:(action.y + last.y) / 2 };
-      if (count === 3) {
+      if (count === 2) {
+          // no-op
+      } else if (count === 3) {
           draw.path = draw.path + "Q" + last.x + "," + last.y + "," + mid.x + "," + mid.y;
       } else if (count > 3) {
           draw.path = draw.path + " " + last.x + "," + last.y + "," + mid.x + "," + mid.y;
@@ -47,7 +50,28 @@ function reducer(_state, action) {
       state.draw = draw;
       break;
     case 'DrawEnd':
-      console.log(state.draw.path);
+      draw = Object.assign({}, state.draw);
+      const path = draw.points.reduce((path, point, index) => {
+        if (index === 0) {
+          return "M" + point.x + "," + point.y;
+        } else if (index === 1) {
+          return path;
+        }
+        const last = draw.points[index-1];
+        const mid = { x:(point.x + last.x)/2, y:(point.y + last.y) / 2 };
+        path += (index === 2) ? "Q" : " ";
+        path += last.x + "," + last.y + ",";
+        if (index < draw.points.length-1) {
+          path += mid.x + "," + mid.y;
+        } else {
+          path += point.x + "," + point.y;
+        }
+        return path;
+      }, "");
+      //console.log(path);
+      //console.log(state.draw.path);
+      draw.path = path;
+      state.draw = draw;
       break;
     default:
       console.log("unknown type:", JSON.stringify(action));
