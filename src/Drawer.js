@@ -46,6 +46,7 @@ class Drawer extends Component {
             context.x = x;
             context.y = y;
             DragContext.setContext(context);
+            window.store.dispatch({type:'addDrawing', x:x, y:y})
         }
     }
     
