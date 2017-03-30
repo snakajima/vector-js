@@ -2,7 +2,7 @@
 // Copyright (c) 2016 Satoshi Nakajima (https://github.com/snakajima)
 // License: The MIT License
 //
-
+import Drawer from './Drawer';
 
 function reducer(_state, action) {
   // The elementMap maps the element id to index.
@@ -50,26 +50,7 @@ function reducer(_state, action) {
       state.draw = draw;
       break;
     case 'drawEnd':
-      draw = Object.assign({}, state.draw);
-      const path = draw.points.reduce((path, point, index) => {
-        if (index === 0) {
-          return "M" + point.x + "," + point.y;
-        } else if (index === 1) {
-          return path;
-        }
-        const last = draw.points[index-1];
-        const mid = { x:(point.x + last.x)/2, y:(point.y + last.y) / 2 };
-        path += (index === 2) ? "Q" : " ";
-        path += last.x + "," + last.y + ",";
-        if (index < draw.points.length-1) {
-          path += mid.x + "," + mid.y;
-        } else {
-          path += point.x + "," + point.y;
-        }
-        return path;
-      }, "");
-      //console.log(path);
-      //console.log(state.draw.path);
+      const path = Drawer.pathFromPoints(state.draw.points);
       var paths = (state.paths || []).map((path) => path);
       paths.push(path);
       state.paths = paths;
