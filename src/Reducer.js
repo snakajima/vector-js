@@ -46,6 +46,9 @@ function reducer(_state, action) {
       }
       state.draw = draw;
       break;
+    case 'DrawEnd':
+      console.log(state.draw.path);
+      break;
     default:
       console.log("unknown type:", JSON.stringify(action));
       break;

@@ -13,10 +13,6 @@ class Drawer extends Component {
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onDrag = this.onDrag.bind(this);
     }
-    onDragEnd(e) {
-        console.log('onDragEnd', this.props.draw.path);
-        DragContext.setContext({});
-    }
     onDragStart(e) {
         console.log('onDragStart');
         if (typeof e.dataTransfer.setDragImage === "function") {
@@ -51,6 +47,10 @@ class Drawer extends Component {
             DragContext.setContext(context);
             window.store.dispatch({type:'DrawAppend', x:x, y:y})
         }
+    }
+    onDragEnd(e) {
+        DragContext.setContext({});
+        window.store.dispatch({type:'DrawEnd'})
     }
     
     render() {
