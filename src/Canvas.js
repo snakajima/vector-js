@@ -14,12 +14,20 @@ class Canvas extends Component {
             width:this.props.width,
             height:this.props.height
         };
+        const svgStyle = {
+            position: 'absolute',
+            width:this.props.width,
+            height:this.props.height,
+            fill: 'none',
+            stroke: 'rgba(0,0,0,1.0)',
+            strokeWidth: 3
+        };
         return <div>
             <div className='canvas' style={style} />
         {
             this.props.elements.map((element, index) => {
                            return <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                 style={style} key={index}>
+                                 style={svgStyle} key={index}>
                            <path d={element.path} />
                            </svg>
                            })
