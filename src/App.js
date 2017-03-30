@@ -34,7 +34,7 @@ class App extends Component {
       }
       {
           (typeof this.state.selection !== 'undefined' && this.state.selection >= 0) ?
-          <Points width={400} height={300} left={0} top={30} selection={this.state.selection} /> : ''
+          <Points width={400} height={300} left={0} top={30} element={this.state.elements[this.state.selection]} /> : ''
       }
       </div>
   }

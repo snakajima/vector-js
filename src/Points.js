@@ -14,8 +14,15 @@ class Points extends Component {
             width:this.props.width,
             height:this.props.height
         };
+        const points = this.props.element.points;
         return <div>
-            <div className='points' style={style} />
+          <div className='points' style={style} />
+            {
+            points.map((point, index) => {
+               const style = {left:point.x, top:point.y};
+               return <div key={index} className='pointer' style={style}></div>
+            })
+            }
           </div>
     }
 }
