@@ -4,7 +4,6 @@
 //
 
 import React, { Component } from 'react';
-import Drawer from './Drawer';
 
 class Canvas extends Component {
     render() {
@@ -16,11 +15,15 @@ class Canvas extends Component {
             height:this.props.height
         };
         return <div>
-            <div className='canvas' style={style}>
-            </div>
-            <Drawer width={this.props.width} height={this.props.height}
-                left={this.props.left} top={this.props.top} />
-        </div>
+        {
+            this.props.paths.map((path) => {
+                           return <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                           style={style}>
+                           <path d={path} />
+                           </svg>
+                           })
+        }
+          </div>
     }
 }
 

@@ -70,8 +70,10 @@ function reducer(_state, action) {
       }, "");
       //console.log(path);
       //console.log(state.draw.path);
-      draw.path = path;
-      state.draw = draw;
+      var paths = (state.paths || []).map((path) => path);
+      paths.push(path);
+      state.paths = paths;
+      state.draw = {};
       break;
     default:
       console.log("unknown type:", JSON.stringify(action));
