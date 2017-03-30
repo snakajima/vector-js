@@ -14,7 +14,7 @@ class Drawer extends Component {
         this.onDrag = this.onDrag.bind(this);
     }
     onDragEnd(e) {
-        console.log('onDragEnd', this.props.path);
+        console.log('onDragEnd', this.props.draw.path);
         DragContext.setContext({});
     }
     onDragStart(e) {
@@ -69,7 +69,7 @@ class Drawer extends Component {
                     onDrag={this.onDrag}>
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
             style={{width:style.width, height:style.height}}>
-        <path d={this.props.path} />
+        <path d={this.props.draw.path || ''} />
         </svg>
         </div>
     }

@@ -30,10 +30,12 @@ function reducer(_state, action) {
     
   switch(action.type) {
     case 'DrawStart':
-      state.path = "M" + action.x + "," + action.y;
+      state.draw = {path: "M" + action.x + "," + action.y};
       break;
    case 'DrawAppend':
-      state.path = state.path + "L" + action.x + "," + action.y;
+      var draw = Object.assign({}, state.draw);
+      draw.path = draw.path + "L" + action.x + "," + action.y;
+      state.draw = draw;
       break;
     default:
       console.log("unknown type:", JSON.stringify(action));
