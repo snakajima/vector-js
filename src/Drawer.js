@@ -14,7 +14,7 @@ class Drawer extends Component {
         this.onDrag = this.onDrag.bind(this);
     }
     onDragEnd(e) {
-        console.log('onDragEnd');
+        console.log('onDragEnd', this.props.path);
         DragContext.setContext({});
     }
     onDragStart(e) {
@@ -35,23 +35,26 @@ class Drawer extends Component {
             x:x, y:y
         };
         DragContext.setContext(context);
-        window.store.dispatch({type:'startDrawing', x:x, y:y})
+        window.store.dispatch({type:'DrawStart', x:x, y:y})
     }
     onDrag(e) {
         var context = DragContext.getContext();
+        if (e.clientX ===0 && e.clientY === 0) {
+            return; // HACK: Don't know why we get an extra
+        }
         const x = e.clientX - context.left;
         const y = e.clientY - context.top;
         if (context.x !== x && context.y !== y) {
-            console.log('onDrag', x, y);
+            //console.log('onDrag', x, y);
             context.x = x;
             context.y = y;
             DragContext.setContext(context);
-            window.store.dispatch({type:'addDrawing', x:x, y:y})
+            window.store.dispatch({type:'DrawAppend', x:x, y:y})
         }
     }
     
     render() {
-        console.log('render', this.props.path);
+        //console.log('render', this.props.path);
         const style = {
             width:this.props.width,
             height:this.props.height,

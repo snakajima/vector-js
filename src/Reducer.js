@@ -29,10 +29,10 @@ function reducer(_state, action) {
   var undoable = false;
     
   switch(action.type) {
-    case 'startDrawing':
+    case 'DrawStart':
       state.path = "M" + action.x + "," + action.y;
       break;
-   case 'addDrawing':
+   case 'DrawAppend':
       state.path = state.path + "L" + action.x + "," + action.y;
       break;
     default:
