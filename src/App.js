@@ -15,7 +15,7 @@ window.store = createStore(Reducer.reducer);
 
 class App extends Component {
   render() {
-      return <Canvas width={400} height={300} />
+      return <Canvas width={400} height={300} left={100} top={10} />
   }
 }
 

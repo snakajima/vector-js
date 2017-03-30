@@ -8,9 +8,19 @@ import Drawer from './Drawer';
 
 class Canvas extends Component {
     render() {
-        return <div className='canvas' style={{width:this.props.width, height:this.props.height}}>
-            <Drawer width={this.props.width} height={this.props.height} />
+        const style = {
+            position: 'absolute',
+            left: this.props.left,
+            top: this.props.top,
+            width:this.props.width,
+            height:this.props.height
+        };
+        return <div>
+            <div className='canvas' style={style}>
             </div>
+            <Drawer width={this.props.width} height={this.props.height}
+                left={this.props.left} top={this.props.top} />
+        </div>
     }
 }
 
