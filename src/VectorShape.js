@@ -24,6 +24,24 @@ class VectorShape {
            return path;
        }, "")
     }
+    
+    static boundingRect(points) {
+        var minmax = {
+        xMax: points[0].x,
+        xMin: points[0].x,
+        yMax: points[0].y,
+        yMin: points[0].y,
+        }
+        minmax = points.reduce((minmax, point) => {
+           minmax.xMax = Math.max(minmax.xMax, point.x);
+           minmax.xMin = Math.min(minmax.xMin, point.x);
+           minmax.yMax = Math.max(minmax.yMax, point.y);
+           minmax.yMin = Math.min(minmax.yMin, point.y);
+           return minmax;
+       }, minmax);
+        return { x:minmax.xMin, y:minmax.yMin,
+            width:minmax.xMax - minmax.xMin, height:minmax.yMax - minmax.yMin };
+    }
 }
 
 export default VectorShape;
