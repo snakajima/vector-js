@@ -60,6 +60,13 @@ class Drawer extends Component {
             left:this.props.left,
             top:this.props.top
         };
+        const svgStyle = {
+            width:this.props.width,
+            height:this.props.height,
+            fill: 'none',
+            stroke: 'rgba(0,0,255,0.5)',
+            strokeWidth: 3
+        };
         return <div className='drawer'
                     style={style}
                     draggable={true}
@@ -67,7 +74,7 @@ class Drawer extends Component {
                     onDragEnd={this.onDragEnd}
                     onDrag={this.onDrag}>
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-            style={{width:style.width, height:style.height}}>
+            style={svgStyle}>
         <path d={this.props.draw.path || ''} />
         </svg>
         </div>
