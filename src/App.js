@@ -23,10 +23,10 @@ class App extends Component {
     
   render() {
       const draw = this.state.draw || {};
-      const paths = this.state.paths || [];
+      const elements = this.state.elements || [];
       return <div>
         <MenuBar />
-        <Canvas width={400} height={300} left={0} top={30} paths={paths} />
+        <Canvas width={400} height={300} left={0} top={30} elements={elements} />
       {
         (this.state.drawMode) ?
           <Drawer width={400} height={300} left={0} top={30} draw={draw} /> : ''

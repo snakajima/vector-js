@@ -51,9 +51,9 @@ function reducer(_state, action) {
       break;
     case 'drawEnd':
       const path = Drawer.pathFromPoints(state.draw.points);
-      var paths = (state.paths || []).map((path) => path);
-      paths.push(path);
-      state.paths = paths;
+      var elements = (state.elements || []).map((element) => element);
+      elements.push(path);
+      state.elements = elements;
       state.draw = {};
       state.drawMode = false;
       undoable = true;
