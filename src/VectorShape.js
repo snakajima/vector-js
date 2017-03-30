@@ -42,6 +42,35 @@ class VectorShape {
         return { x:minmax.xMin, y:minmax.yMin,
             width:minmax.xMax - minmax.xMin, height:minmax.yMax - minmax.yMin };
     }
+    
+    static minGap(points) {
+        const count = points.length;
+        const gaps = points.map((point, index) => {
+            if (index === count-1) {
+                return 999999;
+            }
+            const next = points[index+1];
+            const dx = point.x - next.x;
+            const dy = point.y - next.y;
+            return dx*dx + dy*dy;
+        })
+        const minGap = gaps.reduce((minGap, gap, index) => {
+            if (gap < minGap.value) {
+                minGap.index = index;
+                minGap.value = gap;
+            }
+            return minGap;
+        }, { index:-1, value:999999 });
+        return minGap;
+    }
+    
+    static smoothing(points, ratio) {
+        const rc = VectorShape.boundingRect(points);
+        const t2 = (rc.width * rc.width + rc.height * rc.height) * ratio * ratio;
+        const minGap = VectorShape.minGap(points);
+        console.log(minGap);
+        return points;
+    }
 }
 
 export default VectorShape;
