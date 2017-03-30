@@ -72,7 +72,7 @@ class VectorShape {
             if (minGap.value >= t2) {
                 break;
             }
-            const index = (minGap.index == 0) ? 1 : minGap.index;
+            const index = (minGap.index === 0) ? 1 : minGap.index;
             //console.log("splicing", index, minGap.value, t2);
             points.splice(index,1);
         }

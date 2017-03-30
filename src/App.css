@@ -35,9 +35,7 @@ body {
     opacity: 0.33;
 }
 
-.pointer {
+.pointHandle {
     position:absolute;
-    width:10px;
-    height:10px;
     background: rgba(0,0,255,0.5);
 }
