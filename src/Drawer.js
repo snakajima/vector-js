@@ -35,6 +35,7 @@ class Drawer extends Component {
             x:x, y:y
         };
         DragContext.setContext(context);
+        window.store.dispatch({type:'startDrawing', x:x, y:y})
     }
     onDrag(e) {
         var context = DragContext.getContext();
@@ -49,6 +50,7 @@ class Drawer extends Component {
     }
     
     render() {
+        console.log('render', this.props.path);
         const style = {
             width:this.props.width,
             height:this.props.height,
@@ -61,8 +63,9 @@ class Drawer extends Component {
                     onDragStart={this.onDragStart}
                     onDragEnd={this.onDragEnd}
                     onDrag={this.onDrag}>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" >
-        <path d="M18.984 3c1.078 0 2.016 0.938 2.016 2.016v13.969c0 1.078-0.938 2.016-2.016 2.016h-13.969c-1.078 0-2.016-0.938-2.016-2.016v-13.969c0-1.078 0.938-2.016 2.016-2.016h13.969zM18.984 5.016h-13.969v13.969h13.969v-13.969z" />
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+            style={{width:style.width, height:style.height}}>
+        <path d={this.props.path} />
         </svg>
         </div>
     }

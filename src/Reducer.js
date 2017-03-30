@@ -29,9 +29,12 @@ function reducer(_state, action) {
   var undoable = false;
     
   switch(action.type) {
-      default:
-          console.log("unknown type:", JSON.stringify(action));
-          break;
+    case 'startDrawing':
+      state.path = "M" + action.x + "," + action.y + "l100,100,50,200z";
+      break;
+    default:
+      console.log("unknown type:", JSON.stringify(action));
+      break;
   }
   if (undoable) {
     window.stack.append(state);
