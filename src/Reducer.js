@@ -30,11 +30,20 @@ function reducer(_state, action) {
     
   switch(action.type) {
     case 'DrawStart':
-      state.draw = {path: "M" + action.x + "," + action.y};
+      state.draw = {path: "M" + action.x + "," + action.y, points:[{x:action.x, y:action.y}]};
       break;
    case 'DrawAppend':
       var draw = Object.assign({}, state.draw);
-      draw.path = draw.path + "L" + action.x + "," + action.y;
+      draw.points = draw.points.map((point) => point);
+      draw.points.push({x:action.x, y:action.y});
+      const count = draw.points.length;
+      const last = draw.points[count-1];
+      const mid = { x:(action.x + last.x)/2, y:(action.y + last.y) / 2 };
+      if (count === 3) {
+          draw.path = draw.path + "Q" + last.x + "," + last.y + "," + mid.x + "," + mid.y;
+      } else if (count > 3) {
+          draw.path = draw.path + " " + last.x + "," + last.y + "," + mid.x + "," + mid.y;
+      }
       state.draw = draw;
       break;
     default:
