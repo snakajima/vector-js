@@ -67,8 +67,15 @@ class VectorShape {
     static smoothing(points, ratio) {
         const rc = VectorShape.boundingRect(points);
         const t2 = (rc.width * rc.width + rc.height * rc.height) * ratio * ratio;
-        const minGap = VectorShape.minGap(points);
-        console.log(minGap);
+        while(true) {
+            const minGap = VectorShape.minGap(points);
+            if (minGap.value >= t2) {
+                break;
+            }
+            const index = (minGap.index == 0) ? 1 : minGap.index;
+            //console.log("splicing", index, minGap.value, t2);
+            points.splice(index,1);
+        }
         return points;
     }
 }

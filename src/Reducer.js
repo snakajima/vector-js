@@ -50,13 +50,11 @@ function reducer(_state, action) {
       state.draw = draw;
       break;
     case 'drawEnd':
-      const bounds = VectorShape.boundingRect(state.draw.points);
-      console.log(bounds);
-      VectorShape.smoothing(state.draw.points, 0.2);
-          
-      const path = VectorShape.pathFromPoints(state.draw.points);
+      var points = state.draw.points.map((point) => point);
+      points = VectorShape.smoothing(points, 0.05);
+      const path = VectorShape.pathFromPoints(points);
       var elements = (state.elements || []).map((element) => element);
-      elements.push({path:path, points:state.draw.points});
+      elements.push({path:path, points:points});
       state.elements = elements;
       state.draw = {};
       state.drawMode = false;
