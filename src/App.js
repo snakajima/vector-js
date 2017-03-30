@@ -9,6 +9,7 @@ import createStore from './SimpleRedux';
 import UndoStack from './UndoStack';
 import Canvas from './Canvas';
 import Drawer from './Drawer';
+import MenuBar from './MenuBar';
 import './App.css';
 
 window.stack = new UndoStack();
@@ -24,8 +25,9 @@ class App extends Component {
       const draw = this.state.draw || {};
       const paths = this.state.paths || [];
       return <div>
-        <Canvas width={400} height={300} left={100} top={10} paths={paths} />
-        <Drawer width={400} height={300} left={100} top={10} draw={draw} />
+        <MenuBar />
+        <Canvas width={400} height={300} left={0} top={30} paths={paths} />
+        <Drawer width={400} height={300} left={0} top={30} draw={draw} />
       </div>
   }
 }

@@ -12,3 +12,20 @@ body {
     background: rgba(255,0,0,0.3);
     position: absolute;
 }
+
+.menubar {
+    width:400px;
+    height:30px;
+}
+
+.btn {
+    height: 30px;
+    margin-left:4px;
+    margin-right:4px;
+}
+.btnIA {
+    height: 30px;
+    margin-left:4px;
+    margin-right:4px;
+    opacity: 0.33;
+}

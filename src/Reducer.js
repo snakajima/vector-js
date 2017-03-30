@@ -74,6 +74,10 @@ function reducer(_state, action) {
       paths.push(path);
       state.paths = paths;
       state.draw = {};
+      undoable = true;
+      break;
+    case 'setState':
+      state = action.state;
       break;
     default:
       console.log("unknown type:", JSON.stringify(action));
