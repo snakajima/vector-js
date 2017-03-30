@@ -14,6 +14,9 @@ class MenuBar extends Component {
         <input className={window.stack.redoable() ? "btn" : "btnIA"} type="image"
         src="./ic_color_redo.png"
         onClick={ () => {window.stack.redo(window.store)} } />
+        <input className="btn" type="image"
+        src="./ic_color_plus.png"
+        onClick={ () => {window.store.dispatch({type:'AddElement'})} } />
           </div>
     }
 }

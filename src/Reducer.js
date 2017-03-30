@@ -74,7 +74,11 @@ function reducer(_state, action) {
       paths.push(path);
       state.paths = paths;
       state.draw = {};
+      state.drawMode = false;
       undoable = true;
+      break;
+    case 'AddElement':
+      state.drawMode = true;
       break;
     case 'setState':
       state = action.state;

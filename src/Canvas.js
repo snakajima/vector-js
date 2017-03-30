@@ -15,6 +15,7 @@ class Canvas extends Component {
             height:this.props.height
         };
         return <div>
+            <div className='canvas' style={style} />
         {
             this.props.paths.map((path) => {
                            return <svg version="1.1" xmlns="http://www.w3.org/2000/svg"

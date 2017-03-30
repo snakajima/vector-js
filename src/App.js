@@ -27,7 +27,10 @@ class App extends Component {
       return <div>
         <MenuBar />
         <Canvas width={400} height={300} left={0} top={30} paths={paths} />
-        <Drawer width={400} height={300} left={0} top={30} draw={draw} />
+      {
+        (this.state.drawMode) ?
+          <Drawer width={400} height={300} left={0} top={30} draw={draw} /> : ''
+      }
       </div>
   }
 }
