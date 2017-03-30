@@ -2,7 +2,7 @@
 // Copyright (c) 2016 Satoshi Nakajima (https://github.com/snakajima)
 // License: The MIT License
 //
-import Drawer from './Drawer';
+import VectorShape from './VectorShape';
 
 function reducer(_state, action) {
   // The elementMap maps the element id to index.
@@ -50,7 +50,7 @@ function reducer(_state, action) {
       state.draw = draw;
       break;
     case 'drawEnd':
-      const path = Drawer.pathFromPoints(state.draw.points);
+      const path = VectorShape.pathFromPoints(state.draw.points);
       var elements = (state.elements || []).map((element) => element);
       elements.push({path:path, points:state.draw.points});
       state.elements = elements;
