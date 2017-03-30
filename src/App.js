@@ -9,6 +9,7 @@ import createStore from './SimpleRedux';
 import UndoStack from './UndoStack';
 import Canvas from './Canvas';
 import Drawer from './Drawer';
+import Points from './Points';
 import MenuBar from './MenuBar';
 import './App.css';
 
@@ -30,6 +31,10 @@ class App extends Component {
       {
         (this.state.drawMode) ?
           <Drawer width={400} height={300} left={0} top={30} draw={draw} /> : ''
+      }
+      {
+          (typeof this.state.selection !== 'undefined' && this.state.selection >= 0) ?
+          <Points width={400} height={300} left={0} top={30} selection={this.state.selection} /> : ''
       }
       </div>
   }

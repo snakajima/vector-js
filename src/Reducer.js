@@ -56,10 +56,12 @@ function reducer(_state, action) {
       state.elements = elements;
       state.draw = {};
       state.drawMode = false;
+      state.selection = elements.length-1;
       undoable = true;
       break;
     case 'addElement':
       state.drawMode = true;
+      state.selection = -1;
       break;
     case 'setState':
       state = action.state;
