@@ -27,7 +27,7 @@ function reducer(_state, action) {
   // Do not modify the state object or its sub-objects (no side effect).
   var state = Object.assign({}, _state);
   var undoable = false;
-  var draw;
+  var draw, elements, element, points;
     
   switch(action.type) {
     case 'drawStart':
@@ -50,10 +50,10 @@ function reducer(_state, action) {
       state.draw = draw;
       break;
     case 'drawEnd':
-      var points = state.draw.points.map((point) => point);
+      points = state.draw.points.map((point) => point);
       points = VectorShape.smoothing(points, 0.05);
       const path = VectorShape.pathFromPoints(points);
-      var elements = (state.elements || []).map((element) => element);
+      elements = (state.elements || []).map((element) => element);
       elements.push({path:path, points:points});
       state.elements = elements;
       state.draw = {};
@@ -64,6 +64,16 @@ function reducer(_state, action) {
     case 'addElement':
       state.drawMode = true;
       state.selection = -1;
+      break;
+    case 'pointDragged':
+      elements = (state.elements || []).map((element) => element);
+      element = Object.assign({}, state.elements[state.selection]);
+      points = element.points.map((point) => point);
+      points[action.index] = action.point;
+      element.points = points;
+      element.path = VectorShape.pathFromPoints(points);
+      elements[state.selection] = element;
+      state.elements = elements;
       break;
     case 'setState':
       state = action.state;

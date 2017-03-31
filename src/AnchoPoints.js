@@ -4,8 +4,50 @@
 //
 
 import React, { Component } from 'react';
+import DragContext from './DragContext';
 
 class AnchoPoints extends Component {
+    constructor(props) {
+        super();
+        this.onDragStart = this.onDragStart.bind(this);
+        this.onDragEnd = this.onDragEnd.bind(this);
+        this.onDrag = this.onDrag.bind(this);
+    }
+    onDragStart(e, index) {
+        if (typeof e.dataTransfer.setDragImage === "function") {
+            e.dataTransfer.setDragImage(e.target, -10000, -10000);
+        } else {
+            // To hide the drag image for Microsoft Edge
+            const target = e.target;
+            target.style.opacity = 0;
+            setTimeout(()=>{target.style.opacity = 1;});
+        }
+        const context = {
+          point:this.props.element.points[index],
+          x:e.clientX, y:e.clientY,
+          dx:0, dy:0,
+          index:index
+        };
+        DragContext.setContext(context);
+    }
+    onDrag(e) {
+        var context = DragContext.getContext();
+        const dx = e.clientX-context.x;
+        const dy = e.clientY-context.y;
+        if (context.dx !== dx && context.dy !== dy) {
+            context.dx = dx;
+            context.dy = dy;
+            DragContext.setContext(context);
+            var point = Object.assign({}, context.point);
+            point.x += dx;
+            point.y += dy;
+            window.store.dispatch({type:'pointDragged', point:point, index:context.index})
+        }
+    }
+    onDragEnd(e) {
+        console.log("onDragEnd", e.clientX, e.clientY);
+        DragContext.setContext({});
+    }
     render() {
         const style = {
             left: this.props.left,
@@ -25,7 +67,12 @@ class AnchoPoints extends Component {
                    height:r,
                    borderRadius:r/2
                 };
-                return <div key={index} className='pointHandle' style={style}></div>
+                return <div key={index} className='pointHandle' style={style}
+                           draggable={true}
+                           onDragStart={(e) => this.onDragStart(e, index)}
+                           onDragEnd={this.onDragEnd}
+                           onDrag={this.onDrag}>
+                       </div>
             })
             }
           </div>
