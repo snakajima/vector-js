@@ -9,7 +9,7 @@ import createStore from './SimpleRedux';
 import UndoStack from './UndoStack';
 import Canvas from './Canvas';
 import Drawer from './Drawer';
-import Points from './Points';
+import AnchoPoints from './AnchoPoints';
 import MenuBar from './MenuBar';
 import './App.css';
 
@@ -34,7 +34,7 @@ class App extends Component {
       }
       {
           (typeof this.state.selection !== 'undefined' && this.state.selection >= 0) ?
-          <Points width={400} height={300} left={0} top={30} element={this.state.elements[this.state.selection]} /> : ''
+          <AnchoPoints width={400} height={300} left={0} top={30} element={this.state.elements[this.state.selection]} /> : ''
       }
       </div>
   }

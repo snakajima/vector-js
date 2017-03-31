@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 
-class Points extends Component {
+class AnchoPoints extends Component {
     render() {
         const style = {
             left: this.props.left,
@@ -18,12 +18,18 @@ class Points extends Component {
         return <div className='points' style={style} >
             {
             points.map((point, index) => {
-                       const style = {left:point.x - r/2, top:point.y - r/2, width:r, height:r};
-               return <div key={index} className='pointHandle' style={style}></div>
+                const style = {
+                   left:point.x - r/2,
+                   top:point.y - r/2,
+                   width:r,
+                   height:r,
+                   borderRadius:r/2
+                };
+                return <div key={index} className='pointHandle' style={style}></div>
             })
             }
           </div>
     }
 }
 
-export default Points;
+export default AnchoPoints;
