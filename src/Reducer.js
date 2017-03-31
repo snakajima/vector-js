@@ -65,7 +65,7 @@ function reducer(_state, action) {
       state.drawMode = true;
       state.selection = -1;
       break;
-    case 'pointDragged':
+    case 'anchorDragged':
       elements = (state.elements || []).map((element) => element);
       element = Object.assign({}, state.elements[state.selection]);
       points = element.points.map((point) => point);
@@ -74,6 +74,9 @@ function reducer(_state, action) {
       element.path = VectorShape.pathFromPoints(points);
       elements[state.selection] = element;
       state.elements = elements;
+      break;
+    case 'anchorDropped':
+      undoable = true;
       break;
     case 'setState':
       state = action.state;

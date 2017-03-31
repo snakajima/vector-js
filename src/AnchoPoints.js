@@ -34,19 +34,20 @@ class AnchoPoints extends Component {
         var context = DragContext.getContext();
         const dx = e.clientX-context.x;
         const dy = e.clientY-context.y;
-        if (context.dx !== dx && context.dy !== dy) {
+        if (e.buttons > 0 && context.dx !== dx && context.dy !== dy) {
             context.dx = dx;
             context.dy = dy;
             DragContext.setContext(context);
             var point = Object.assign({}, context.point);
             point.x += dx;
             point.y += dy;
-            window.store.dispatch({type:'pointDragged', point:point, index:context.index})
+            window.store.dispatch({type:'anchorDragged', point:point, index:context.index})
         }
     }
     onDragEnd(e) {
         console.log("onDragEnd", e.clientX, e.clientY);
         DragContext.setContext({});
+        window.store.dispatch({type:'anchorDropped'})
     }
     render() {
         const style = {
