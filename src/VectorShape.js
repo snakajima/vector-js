@@ -10,7 +10,7 @@ class VectorShape {
         var last = undefined;
         const lastIndex = points.length - 1;
         if (closed) {
-          last = points[points.length-1];
+          last = points[lastIndex];
         } else {
           first.corner = true;
           points[lastIndex].corner = true;
@@ -36,7 +36,7 @@ class VectorShape {
                path += "L" + point.x + "," + point.y;
              }
              prev = undefined;
-             if (index === lastIndex && first.corner) {
+             if (index === lastIndex && typeof last === 'object' && first.corner) {
                path += "L" + first.x + "," + first.y;
              }
            } else {
@@ -44,7 +44,7 @@ class VectorShape {
                path += "Q" + prev.x + "," + prev.y + "," + (prev.x + point.x)/2 + "," + (prev.y + point.y)/2;
              }
              prev = point;
-             if (index === lastIndex && first.corner) {
+             if (index === lastIndex && typeof last === 'object') {
                if (first.corner) {
                  path += "Q" + point.x + "," + point.y + "," + first.x + "," + first.y;
                } else {
