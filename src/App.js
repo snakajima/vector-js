@@ -21,7 +21,7 @@ class App extends Component {
         super();
         window.store.setApplication(this);
     }
-    
+
   render() {
       const draw = this.state.draw || {};
       const elements = this.state.elements || [];
@@ -34,7 +34,9 @@ class App extends Component {
       }
       {
           (typeof this.state.selection !== 'undefined' && this.state.selection >= 0) ?
-          <AnchoPoints width={400} height={300} left={0} top={30} element={this.state.elements[this.state.selection]} /> : ''
+          <AnchoPoints width={400} height={300} left={0} top={30}
+            selected={this.state.selectedAnchorIndex}
+            element={this.state.elements[this.state.selection]} /> : ''
       }
       </div>
   }

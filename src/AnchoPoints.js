@@ -65,6 +65,7 @@ class AnchoPoints extends Component {
         };
         const points = this.props.element.points;
         const r = 10;
+        console.log('selected', this.props.selected);
         return <div className='points' style={style} >
             {
             points.map((point, index) => {
@@ -73,7 +74,8 @@ class AnchoPoints extends Component {
                    top:point.y - r/2,
                    width:r,
                    height:r,
-                   borderRadius:r/2
+                   borderRadius:r/2,
+                   background: (index === this.props.selected) ? 'rgba(255,0,0,0.5)' : 'rgba(0,0,255,0.5)'
                 };
                 return <div key={index} className='pointHandle' style={style}
                            draggable={true}

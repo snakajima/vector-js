@@ -59,11 +59,13 @@ function reducer(_state, action) {
       state.draw = {};
       state.drawMode = false;
       state.selection = elements.length-1;
+      state.selectedAnchorIndex = undefined; // paranoia
       undoable = true;
       break;
     case 'addElement':
       state.drawMode = true;
       state.selection = -1;
+      state.selectedAnchorIndex = undefined;
       break;
     case 'anchorDragged':
       elements = (state.elements || []).map((element) => element);
@@ -74,6 +76,7 @@ function reducer(_state, action) {
       element.path = VectorShape.pathFromPoints(points);
       elements[state.selection] = element;
       state.elements = elements;
+      state.selectedAnchorIndex = action.index;
       break;
     case 'anchorDropped':
       undoable = true;
@@ -87,6 +90,7 @@ function reducer(_state, action) {
       element.path = VectorShape.pathFromPoints(points);
       elements[state.selection] = element;
       state.elements = elements;
+      state.selectedAnchorIndex = action.index;
       undoable = true;
       break;
     case 'setState':
