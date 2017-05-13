@@ -4,27 +4,58 @@
 //
 
 class VectorShape {
-    static pathFromPoints(points) {
-        const count = points.length;
+    static pathFromPoints(pointsIn, closed=false) {
+        var points = pointsIn.map((point)=>point);
+        var first = points[0];
+        var last = undefined;
+        const lastIndex = points.length - 1;
+        if (closed) {
+          last = points[points.length-1];
+        } else {
+          first.corner = true;
+          points[lastIndex].corner = true;
+        }
+        var prev = undefined;
         return points.reduce((path, point, index) => {
            if (index === 0) {
-               return "M" + point.x + "," + point.y;
-           } else if (index === 1) {
-               return path;
-           }
-           const last = points[index-1];
-           const mid = { x:(point.x + last.x)/2, y:(point.y + last.y) / 2 };
-           path += (index === 2) ? "Q" : " ";
-           path += last.x + "," + last.y + ",";
-           if (index < count-1) {
-               path += mid.x + "," + mid.y;
+             if (typeof last === 'object' && point.corner) {
+               if (last.corner) {
+                 path += "M" + (last.x + point.x)/2 + "," + (last.y + point.y)/2;
+               } else {
+                 path += "M" + point.x + "," + point.y;
+               }
+               prev = point;
+             } else {
+               path += "M" + point.x + "," + point.y;
+               prev = undefined;
+             }
+           } else if (point.corner) {
+             if (typeof prev === 'object') {
+               path += "Q" + prev.x + "," + prev.y + "," + point.x + "," + point.y;
+             } else {
+               path += "L" + point.x + "," + point.y;
+             }
+             prev = undefined;
+             if (index === lastIndex && first.corner) {
+               path += "L" + first.x + "," + first.y;
+             }
            } else {
-               path += point.x + "," + point.y;
+             if (typeof prev === 'object') {
+               path += "Q" + prev.x + "," + prev.y + "," + (prev.x + point.x)/2 + "," + (prev.y + point.y)/2;
+             }
+             prev = point;
+             if (index === lastIndex && first.corner) {
+               if (first.corner) {
+                 path += "Q" + point.x + "," + point.y + "," + first.x + "," + first.y;
+               } else {
+                 path += "Q" + point.x + "," + point.y + "," + (point.x + first.x)/2 + "," + (point.y + first.y)/2;
+               }
+             }
            }
            return path;
        }, "")
     }
-    
+
     static boundingRect(points) {
         var minmax = {
         xMax: points[0].x,
@@ -42,7 +73,7 @@ class VectorShape {
         return { x:minmax.xMin, y:minmax.yMin,
             width:minmax.xMax - minmax.xMin, height:minmax.yMax - minmax.yMin };
     }
-    
+
     static minGap(points) {
         const count = points.length;
         const gaps = points.map((point, index) => {
@@ -63,7 +94,7 @@ class VectorShape {
         }, { index:-1, value:999999 });
         return minGap;
     }
-    
+
     static smoothing(points, ratio) {
         const rc = VectorShape.boundingRect(points);
         const t2 = (rc.width * rc.width + rc.height * rc.height) * ratio * ratio;

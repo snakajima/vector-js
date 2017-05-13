@@ -21,14 +21,14 @@ function reducer(_state, action) {
     window.stack.append(initialState);
     return initialState;
   }
-    
+
   // *** NOTE: IMPORTANT ***
   // In order to enable undo and redo, we must strictly follow the Redux guideline.
   // Do not modify the state object or its sub-objects (no side effect).
   var state = Object.assign({}, _state);
   var undoable = false;
   var draw, elements, element, points;
-    
+
   switch(action.type) {
     case 'drawStart':
       state.draw = {path: "M" + action.x + "," + action.y, points:[{x:action.x, y:action.y}]};
@@ -36,7 +36,7 @@ function reducer(_state, action) {
    case 'drawAppend':
       draw = Object.assign({}, state.draw);
       draw.points = draw.points.map((point) => point);
-      draw.points.push({x:action.x, y:action.y});
+      draw.points.push({x:action.x, y:action.y, corner:false});
       const count = draw.points.length;
       const last = draw.points[count-2];
       const mid = { x:(action.x + last.x)/2, y:(action.y + last.y) / 2 };
@@ -76,6 +76,17 @@ function reducer(_state, action) {
       state.elements = elements;
       break;
     case 'anchorDropped':
+      undoable = true;
+      break;
+    case 'anchorUpdated':
+      elements = (state.elements || []).map((element) => element);
+      element = Object.assign({}, state.elements[state.selection]);
+      points = element.points.map((point) => point);
+      points[action.index] = action.point;
+      element.points = points;
+      element.path = VectorShape.pathFromPoints(points);
+      elements[state.selection] = element;
+      state.elements = elements;
       undoable = true;
       break;
     case 'setState':

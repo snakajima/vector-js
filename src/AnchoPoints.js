@@ -12,6 +12,7 @@ class AnchoPoints extends Component {
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onDrag = this.onDrag.bind(this);
+        this.onDoubleClick = this.onDoubleClick.bind(this);
     }
     onDragStart(e, index) {
         if (typeof e.dataTransfer.setDragImage === "function") {
@@ -49,6 +50,12 @@ class AnchoPoints extends Component {
         DragContext.setContext({});
         window.store.dispatch({type:'anchorDropped'})
     }
+    onDoubleClick(e, index) {
+      var point =  this.props.element.points[index];
+      point.corner = !point.corner;
+      console.log("double click", point);
+      window.store.dispatch({type:'anchorUpdated', point:point, index:index})
+    }
     render() {
         const style = {
             left: this.props.left,
@@ -72,7 +79,8 @@ class AnchoPoints extends Component {
                            draggable={true}
                            onDragStart={(e) => this.onDragStart(e, index)}
                            onDragEnd={this.onDragEnd}
-                           onDrag={this.onDrag}>
+                           onDrag={this.onDrag}
+                           onDoubleClick={(e) => this.onDoubleClick(e, index)}>
                        </div>
             })
             }
