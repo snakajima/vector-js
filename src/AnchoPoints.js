@@ -12,6 +12,7 @@ class AnchoPoints extends Component {
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onDrag = this.onDrag.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.onDoubleClick = this.onDoubleClick.bind(this);
     }
     onDragStart(e, index) {
@@ -50,6 +51,9 @@ class AnchoPoints extends Component {
         DragContext.setContext({});
         window.store.dispatch({type:'anchorDropped'})
     }
+    onClick(e, index) {
+      window.store.dispatch({type:'anchorSelected', index:index})
+    }
     onDoubleClick(e, index) {
       var point =  this.props.element.points[index];
       point.corner = !point.corner;
@@ -65,7 +69,7 @@ class AnchoPoints extends Component {
         };
         const points = this.props.element.points;
         const r = 10;
-        console.log('selected', this.props.selected);
+        //console.log('selected', this.props.selected);
         return <div className='points' style={style} >
             {
             points.map((point, index) => {
@@ -82,6 +86,7 @@ class AnchoPoints extends Component {
                            onDragStart={(e) => this.onDragStart(e, index)}
                            onDragEnd={this.onDragEnd}
                            onDrag={this.onDrag}
+                           onClick={(e) => this.onClick(e, index)}
                            onDoubleClick={(e) => this.onDoubleClick(e, index)}>
                        </div>
             })

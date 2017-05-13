@@ -93,6 +93,9 @@ function reducer(_state, action) {
       state.selectedAnchorIndex = action.index;
       undoable = true;
       break;
+    case 'anchorSelected':
+      state.selectedAnchorIndex = action.index;
+      break;
     case 'setState':
       state = action.state;
       break;
